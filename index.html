@@ -14,6 +14,7 @@
             --primary-dark: #1d4ed8;
             --accent: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
@@ -26,6 +27,37 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+        }
+
+        /* ===== TRIAL BANNER ===== */
+        .trial-banner {
+            background: linear-gradient(90deg, var(--warning), #fbbf24);
+            color: #1e293b;
+            padding: 0.6rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .trial-banner.expired {
+            background: linear-gradient(90deg, var(--danger), #dc2626);
+            color: white;
+        }
+
+        .trial-banner button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .trial-banner.expired button {
+            background: white;
+            color: var(--danger);
         }
 
         /* ===== LOGIN / SIGNUP SCREEN ===== */
@@ -192,11 +224,129 @@
             min-height: 1.2rem;
         }
 
+        /* ===== SUBSCRIPTION SCREEN ===== */
+        .sub-screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+        }
+
+        .sub-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .sub-card h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .sub-card .trial-info {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sub-card .expired-msg {
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .plan-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .plan:hover {
+            border-color: var(--primary);
+        }
+
+        .plan.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .plan .plan-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        .plan .plan-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .plan .plan-period {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .plan .plan-save {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .pay-btn:hover { background: var(--primary-dark); }
+
+        .pay-btn:disabled {
+            background: var(--border);
+            color: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .sub-footer {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
         /* ===== APP ===== */
         .app-container {
             display: grid;
             grid-template-columns: 260px 1fr;
-            grid-template-rows: auto 1fr;
+            grid-template-rows: auto auto 1fr;
             min-height: 100vh;
         }
 
@@ -445,13 +595,53 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        .locked-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .locked-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .locked-card h2 {
+            color: var(--danger);
+            margin-bottom: 0.5rem;
+        }
+
+        .locked-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .locked-card button {
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
         @media (max-width: 768px) {
             .app-container { grid-template-columns: 1fr; }
             .sidebar { display: none; }
             .invoice-header { grid-template-columns: 1fr; }
             .actions { width: 100%; justify-content: flex-start; }
             .totals { max-width: 100%; }
-            .auth-card { padding: 2rem 1.25rem; }
+            .auth-card, .sub-card { padding: 2rem 1.25rem; }
+            .plan-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -524,9 +714,43 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SUBSCRIPTION SCREEN                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="subScreen" class="sub-screen" style="display:none">
+        <div class="sub-card">
+            <h1>⏰ Trial Expired</h1>
+            <p class="expired-msg">Your 7-day free trial has ended</p>
+            <p class="trial-info">Choose a plan to continue using Invoice Generator Pro</p>
+
+            <div class="plan-grid">
+                <div class="plan" onclick="selectPlan('week')" id="planWeek">
+                    <div class="plan-name">Weekly</div>
+                    <div class="plan-price">R 29<span class="plan-period"> / week</span></div>
+                </div>
+                <div class="plan selected" onclick="selectPlan('month')" id="planMonth">
+                    <div class="plan-name">Monthly <span class="plan-save">POPULAR</span></div>
+                    <div class="plan-price">R 99<span class="plan-period"> / month</span></div>
+                </div>
+                <div class="plan" onclick="selectPlan('year')" id="planYear">
+                    <div class="plan-name">Yearly <span class="plan-save">SAVE 40%</span></div>
+                    <div class="plan-price">R 699<span class="plan-period"> / year</span></div>
+                </div>
+            </div>
+
+            <button class="pay-btn" id="payBtn" onclick="activateSubscription()">Subscribe Now</button>
+            <p class="sub-footer">Secure payment • Cancel anytime</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
     <!-- APP SCREEN                                                     -->
     <!-- ═══════════════════════════════════════════════════════════════ -->
     <div id="appScreen" class="app-container" style="display:none">
+        <div class="trial-banner" id="trialBanner" style="display:none">
+            <span id="trialText"></span>
+            <button onclick="goToSubscribe()">Upgrade</button>
+        </div>
+
         <header>
             <h1>🧾 Invoice Generator Pro</h1>
             <div style="display:flex;align-items:center;gap:1rem">
@@ -588,7 +812,6 @@ Phone: +27 123 456 7890</textarea>
                 <table id="itemsTable">
                     <thead>
                         <tr>
-                            <!-- ORDER: Price | Qty | Description | Total -->
                             <th style="width:110px">Price</th>
                             <th style="width:70px">Qty</th>
                             <th>Description</th>
@@ -627,30 +850,36 @@ Account: 1234567890</textarea>
 
     <script>
         // ═══════════════════════════════════════════════════════════════
-        // USER AUTHENTICATION SYSTEM (localStorage-based)
+        // CONSTANTS
+        // ═══════════════════════════════════════════════════════════════
+        const TRIAL_DAYS = 7;
+        const PLANS = {
+            week: { price: 29, period: 'week', days: 7 },
+            month: { price: 99, period: 'month', days: 30 },
+            year: { price: 699, period: 'year', days: 365 }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // USER AUTHENTICATION SYSTEM
         // ═══════════════════════════════════════════════════════════════
         const AUTH_KEY = 'invoice_auth_users';
         const SESSION_KEY = 'invoice_auth_session';
         const GOOGLE_USER_KEY = 'invoice_google_user';
 
-        // Get all registered users
         function getUsers() {
             const data = localStorage.getItem(AUTH_KEY);
             return data ? JSON.parse(data) : {};
         }
 
-        // Save users
         function saveUsers(users) {
             localStorage.setItem(AUTH_KEY, JSON.stringify(users));
         }
 
-        // Get current session
         function getSession() {
             const data = localStorage.getItem(SESSION_KEY);
             return data ? JSON.parse(data) : null;
         }
 
-        // Save session
         function saveSession(user) {
             localStorage.setItem(SESSION_KEY, JSON.stringify({
                 email: user.email,
@@ -660,28 +889,115 @@ Account: 1234567890</textarea>
             }));
         }
 
-        // Clear session (logout)
         function clearSession() {
             localStorage.removeItem(SESSION_KEY);
         }
 
-        // Check if logged in
         function isLoggedIn() {
             return getSession() !== null;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SUBSCRIPTION SYSTEM
+        // ═══════════════════════════════════════════════════════════════
+        function getSubKey() {
+            const session = getSession();
+            return session ? 'invoice_sub_' + session.email : null;
+        }
+
+        function getSubscription() {
+            const key = getSubKey();
+            if (!key) return null;
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        }
+
+        function saveSubscription(sub) {
+            const key = getSubKey();
+            if (!key) return;
+            localStorage.setItem(key, JSON.stringify(sub));
+        }
+
+        function startTrial() {
+            const sub = {
+                status: 'trial',
+                startDate: new Date().toISOString(),
+                endDate: new Date(Date.now() + TRIAL_DAYS * 24 * 60 * 60 * 1000).toISOString(),
+                plan: null,
+                paidDate: null
+            };
+            saveSubscription(sub);
+            return sub;
+        }
+
+        function activatePlan(planType) {
+            const plan = PLANS[planType];
+            const sub = {
+                status: 'active',
+                startDate: new Date().toISOString(),
+                endDate: new Date(Date.now() + plan.days * 24 * 60 * 60 * 1000).toISOString(),
+                plan: planType,
+                paidDate: new Date().toISOString()
+            };
+            saveSubscription(sub);
+            return sub;
+        }
+
+        function checkSubscription() {
+            const sub = getSubscription();
+            if (!sub) {
+                // New user - start trial
+                return startTrial();
+            }
+
+            const now = new Date();
+            const end = new Date(sub.endDate);
+
+            if (now > end) {
+                // Expired
+                if (sub.status === 'trial') {
+                    sub.status = 'trial_expired';
+                } else {
+                    sub.status = 'expired';
+                }
+                saveSubscription(sub);
+                return sub;
+            }
+
+            return sub;
+        }
+
+        function getTrialDaysLeft() {
+            const sub = getSubscription();
+            if (!sub || sub.status !== 'trial') return 0;
+            const end = new Date(sub.endDate);
+            const now = new Date();
+            const diff = end - now;
+            return Math.max(0, Math.ceil(diff / (24 * 60 * 60 * 1000)));
+        }
+
+        function isSubActive() {
+            const sub = getSubscription();
+            if (!sub) return false;
+            const now = new Date();
+            const end = new Date(sub.endDate);
+            return now <= end && (sub.status === 'trial' || sub.status === 'active');
         }
 
         // ═══════════════════════════════════════════════════════════════
         // AUTH UI
         // ═══════════════════════════════════════════════════════════════
         const authScreen = document.getElementById('authScreen');
+        const subScreen = document.getElementById('subScreen');
         const appScreen = document.getElementById('appScreen');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const tabLogin = document.getElementById('tabLogin');
-        const tabSignup = document.getElementById('tabSignup');
-        const authFooter = document.getElementById('authFooter');
 
         function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const tabLogin = document.getElementById('tabLogin');
+            const tabSignup = document.getElementById('tabSignup');
+            const authFooter = document.getElementById('authFooter');
+
             if (tab === 'login') {
                 loginForm.style.display = 'block';
                 signupForm.style.display = 'none';
@@ -718,7 +1034,7 @@ Account: 1234567890</textarea>
             }
 
             saveSession(users[email]);
-            enterApp();
+            afterLogin();
         }
 
         function handleSignup(e) {
@@ -756,13 +1072,11 @@ Account: 1234567890</textarea>
 
             saveUsers(users);
             saveSession(users[email]);
-
             showToast('Account created! 🎉');
-            enterApp();
+            afterLogin();
         }
 
         function handleGoogleSignIn() {
-            // FIXED: Use consistent Google user so data persists
             let googleUser = localStorage.getItem(GOOGLE_USER_KEY);
             let email, name;
 
@@ -771,7 +1085,6 @@ Account: 1234567890</textarea>
                 email = parsed.email;
                 name = parsed.name;
             } else {
-                // First time Google sign-in - create persistent Google user
                 email = 'google_user_' + Math.random().toString(36).substr(2, 6) + '@gmail.com';
                 name = 'Google User';
                 localStorage.setItem(GOOGLE_USER_KEY, JSON.stringify({ email, name }));
@@ -792,11 +1105,47 @@ Account: 1234567890</textarea>
 
             saveSession(users[email]);
             showToast('Signed in with Google! 🔵');
+            afterLogin();
+        }
+
+        function afterLogin() {
+            authScreen.style.display = 'none';
+
+            const sub = checkSubscription();
+
+            if (sub.status === 'trial_expired' || sub.status === 'expired') {
+                showSubScreen();
+            } else {
+                enterApp();
+            }
+        }
+
+        function showSubScreen() {
+            subScreen.style.display = 'flex';
+            appScreen.style.display = 'none';
+            selectPlan('month');
+        }
+
+        function goToSubscribe() {
+            showSubScreen();
+        }
+
+        let selectedPlan = 'month';
+
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
+            document.getElementById('plan' + plan.charAt(0).toUpperCase() + plan.slice(1)).classList.add('selected');
+        }
+
+        function activateSubscription() {
+            activatePlan(selectedPlan);
+            showToast('Subscription activated! ✅');
+            subScreen.style.display = 'none';
             enterApp();
         }
 
         function enterApp() {
-            authScreen.style.display = 'none';
             appScreen.style.display = 'grid';
 
             const session = getSession();
@@ -805,7 +1154,29 @@ Account: 1234567890</textarea>
                 document.getElementById('userAvatar').textContent = (session.name || session.email).charAt(0).toUpperCase();
             }
 
+            updateTrialBanner();
             initApp();
+        }
+
+        function updateTrialBanner() {
+            const sub = getSubscription();
+            const banner = document.getElementById('trialBanner');
+            const text = document.getElementById('trialText');
+
+            if (!sub) return;
+
+            if (sub.status === 'trial') {
+                const daysLeft = getTrialDaysLeft();
+                banner.style.display = 'block';
+                banner.className = 'trial-banner';
+                text.textContent = `🎁 ${daysLeft} day${daysLeft !== 1 ? 's' : ''} left in free trial`;
+            } else if (sub.status === 'active') {
+                banner.style.display = 'none';
+            } else {
+                banner.style.display = 'block';
+                banner.className = 'trial-banner expired';
+                text.textContent = '⏰ Your subscription has expired';
+            }
         }
 
         function logout() {
@@ -817,9 +1188,8 @@ Account: 1234567890</textarea>
             document.getElementById('loginError').textContent = '';
         }
 
-        // Auto-login if session exists
         if (isLoggedIn()) {
-            enterApp();
+            afterLogin();
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -891,7 +1261,6 @@ Account: 1234567890</textarea>
             notes: ''
         };
 
-        // Track if app is already initialized to prevent duplicate event listeners
         let appInitialized = false;
 
         const els = {
@@ -919,11 +1288,10 @@ Account: 1234567890</textarea>
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // INIT APP - FIXED: Only runs once, prevents duplicate listeners
+        // INIT APP
         // ═══════════════════════════════════════════════════════════════
         function initApp() {
             if (appInitialized) {
-                // Just refresh data for current user
                 createNewInvoice();
                 return;
             }
@@ -941,7 +1309,6 @@ Account: 1234567890</textarea>
             addItem();
             renderSavedInvoices();
 
-            // Attach event listeners ONCE only
             els.addItemBtn.addEventListener('click', () => addItem());
             els.saveBtn.addEventListener('click', saveInvoice);
             els.exportPdfBtn.addEventListener('click', exportToPdf);
@@ -953,8 +1320,7 @@ Account: 1234567890</textarea>
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // ITEMS — ORDER: Price | Qty | Description | Total
-        // NO max limit on price — type any number freely
+        // ITEMS
         // ═══════════════════════════════════════════════════════════════
         function addItem(price = '', qty = 1, description = '') {
             const row = document.createElement('tr');
@@ -997,7 +1363,6 @@ Account: 1234567890</textarea>
             let subtotal = 0;
             document.querySelectorAll('.item-total').forEach(el => {
                 const text = el.textContent;
-                // FIXED: More robust parsing - extract number after currency symbol
                 const match = text.match(/[\d,.]+$/);
                 const val = match ? parseFloat(match[0].replace(/,/g, '')) : 0;
                 subtotal += val;
@@ -1060,7 +1425,7 @@ Account: 1234567890</textarea>
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // SAVE — FIXED: Prevents duplicate saves
+        // SAVE
         // ═══════════════════════════════════════════════════════════════
         let isSaving = false;
 
@@ -1079,7 +1444,7 @@ Account: 1234567890</textarea>
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // LOAD INVOICE — FIXED: Properly clears logo when invoice has none
+        // LOAD INVOICE
         // ═══════════════════════════════════════════════════════════════
         function loadInvoice(id) {
             const invoice = Storage.getById(id);
@@ -1098,7 +1463,6 @@ Account: 1234567890</textarea>
             els.taxRate.value = invoice.taxRate || 15;
             els.notes.value = invoice.notes || '';
 
-            // FIXED: Properly handle logo - clear if none, show if present
             if (invoice.logo) {
                 els.logoPreview.src = invoice.logo;
                 els.logoPreview.style.display = 'block';
@@ -1136,7 +1500,6 @@ Account: 1234567890</textarea>
         function createNewInvoice() {
             currentInvoice = { id: null, items: [], logo: '' };
 
-            // Clear all inputs except logo upload
             document.querySelectorAll('input, textarea').forEach(el => {
                 if (el.id !== 'logoUpload') el.value = '';
             });
@@ -1205,7 +1568,7 @@ Account: 1234567890</textarea>
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // PDF EXPORT — FIXED: Prevents double export
+        // PDF EXPORT
         // ═══════════════════════════════════════════════════════════════
         let isExporting = false;
 
